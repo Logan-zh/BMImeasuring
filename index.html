@@ -28,13 +28,14 @@
         </div>
         <div class="information col-12 row justify-content-center">
         <div class="col-6 text-right p-0">BMI：</div><div class="col-6 p-0" id="demo"></div>
-        <div class="col12 info"></div>
+        <div class="col12 info text-center"></div>
         </div>
     </div>
     <script>
         function measuring(){
             var demo = document.querySelector('#demo');
             var height = document.querySelector('input[name=height]').value;
+            var th = (height*height)/10000;
             var weight = document.querySelector('input[name=weight').value;
             var nav = document.querySelector('.navbar');
             var container = document.querySelectorAll('.container').item(1);
@@ -45,14 +46,28 @@
                 nav.classList.remove('bg-success');
                 nav.classList.remove('bg-danger');
                 nav.classList.add('bg-info');
-                info.innerHTML = '過輕';
+                for(weight;BMI<18.5;weight++){
+                    BMI = weight/th;
+                    if(BMI<18.5){
+                        cw = weight;
+                        cb = BMI;
+                    }
+                }
+                info.innerHTML = '過輕 <br>建議加重至'+cw;
                 info.classList.add('text-info');
                 info.classList.remove('text-danger');
             }else if(BMI>24){
                 nav.classList.remove('bg-success');
                 nav.classList.remove('bg-info');
                 nav.classList.add('bg-danger');
-                info.innerHTML = '過重';
+                for(weight;BMI>24;weight--){
+                    BMI = weight/th;
+                    if(BMI>24){
+                        cw = weight;
+                        cb = BMI;
+                    }
+                }
+                info.innerHTML = '過重 <br>建議減重至'+cw;
                 info.classList.add('text-danger');
                 info.classList.remove('text-info');
             }else{
@@ -60,7 +75,6 @@
                 nav.classList.remove('bg-info');
                 nav.classList.add('bg-success');
                 info.innerHTML ='正常';
-                nav.classList.remove('bg-info');
                 info.classList.remove('text-danger');
             }
         }
